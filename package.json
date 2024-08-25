@@ -1,0 +1,29 @@
+{
+  "name": "mou-endpoint",
+  "version": "0.0.1",
+  "description": "Personalized backend API",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "nitropack prepare",
+    "dev": "nitropack dev",
+    "build": "nitropack build",
+    "preview": "node .output/server/index.mjs"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "XiaoMouz",
+  "license": "MIT",
+  "packageManager": "pnpm@9.7.0",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240821.1",
+    "@types/node": "^22.5.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "bs58": "^6.0.0",
+    "nitropack": "^2.9.7",
+    "unstorage": "^1.10.2",
+    "wrangler": "^3.72.2"
+  }
+}
