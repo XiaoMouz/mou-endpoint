@@ -9,7 +9,7 @@ export default defineNitroConfig({
   storage: {
     kv: {
       driver: 'cloudflare-kv-binding',
-      binding: 'KV_SETTINGS',
+      binding: 'KV_STORAGE',
     },
   },
   devStorage: {
