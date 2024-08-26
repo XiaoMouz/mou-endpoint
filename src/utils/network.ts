@@ -2,7 +2,7 @@ import { type Node } from '~/types/node'
 import { type TestResult } from '~/types/test-result'
 
 export async function testNode(node: Node): Promise<TestResult> {
-  fetch(`http://${node.address}/`, {
+  await fetch(`http://${node.address}/`, {
     method: 'GET',
   })
   const start = Date.now()
