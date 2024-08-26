@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
     }
     resData[index].results.push(result)
   }
-  setValue('test-result', JSON.stringify(resData))
+  await setValue('test-result', JSON.stringify(resData))
   return {
     message: 'OK - Scheduled',
     data: resData,
