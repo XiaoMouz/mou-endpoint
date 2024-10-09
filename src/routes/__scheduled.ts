@@ -1,20 +1,13 @@
-import { createClient } from '@supabase/supabase-js'
 import { getValue, setValue } from '~/model/kv'
 import { type Database, type Tables } from '~/types/database.types'
 import { type Node } from '~/types/node'
 import { type Result } from '~/types/speedtest'
 import { testNode } from '~/utils/network'
+import { useCleint } from '~/utils/supabase'
 
 export default defineEventHandler(async (event) => {
-  const env = process.env
-  if (!env.SUPABASE_URL || !env.SUPABASE_KEY) {
-    return {
-      message: 'Failed',
-      error: 'Missing SUPABASE_URL or SUPABASE_KEY',
-    }
-  }
-  const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY)
-  const { data } = await supabase
+  const client = useCleint()
+  const { data } = await client
     .from('datasources')
     .select('*')
     .eq('state', 'enable')
