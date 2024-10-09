@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
   const { data } = await supabase
     .from('datasources')
     .select('*')
-    .eq('id', 1)
+    .eq('state', 'enable')
+    .eq('type', 'net-node')
     .returns<Tables<'datasources'>[]>()
   if (!data) {
     return {
