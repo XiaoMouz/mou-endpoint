@@ -4,7 +4,8 @@ import { type TestResult } from '~/types/test-result'
 export async function testNode(node: Node): Promise<TestResult> {
   await fetch(`http://${node.address}/`, {
     method: 'GET',
-  })
+  }).catch((error) => {})
+  console.log('Testing node:', node)
   const start = Date.now()
   return fetch(`http://${node.address}/`, {
     method: 'GET',
