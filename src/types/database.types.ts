@@ -81,6 +81,8 @@ export type Database = {
           content: string | null
           contributors: string[] | null
           create_time: string
+          description: string | null
+          have_password: boolean
           head_image: string | null
           parent: number | null
           password: string | null
@@ -100,6 +102,8 @@ export type Database = {
           content?: string | null
           contributors?: string[] | null
           create_time?: string
+          description?: string | null
+          have_password?: boolean
           head_image?: string | null
           parent?: number | null
           password?: string | null
@@ -119,6 +123,8 @@ export type Database = {
           content?: string | null
           contributors?: string[] | null
           create_time?: string
+          description?: string | null
+          have_password?: boolean
           head_image?: string | null
           parent?: number | null
           password?: string | null
@@ -130,7 +136,15 @@ export type Database = {
           update_time?: string
           views_num?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'contents_author_fkey'
+            columns: ['author']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          }
+        ]
       }
       datasources: {
         Row: {

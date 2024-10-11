@@ -1,15 +1,22 @@
-import { type Database } from '~/types/database.types'
+import { useClient } from '~/utils/supabase'
 export default defineEventHandler(async (evt) => {
-  const client = useCleint()
-  // 从 supabase 获取数据，content 表中 type 为 post ，以 create time 降序排列
+  const client = useClient()
+  const offsetQuery = getQuery(evt).offset
+  const offset =
+    offsetQuery && !Array.isArray(offsetQuery)
+      ? parseInt(offsetQuery.toString())
+      : 0
   const { data } = await client
     .from('contents')
-    .select('*')
+    .select(
+      'cid, title, create_time, update_time, password, have_password ,author, type,state,parent,allow_comment,allow_anonymous_comment,views_num,stars_num,description'
+    )
     .eq('type', 'post')
     .eq('state', 'publish')
     .order('create_time', { ascending: false })
-    .limit(10)
+    .range(offset, offset + 10)
   if (!data) {
+    setResponseStatus(evt, 404, 'Not Found')
     return {
       message: 'Failed',
       error: 'No data available - empty db result',
@@ -18,9 +25,8 @@ export default defineEventHandler(async (evt) => {
   // for each检查数据中是否有密码，若有将密码和内容删除
 
   for (const item of data) {
-    if (item.password) {
+    if (item.have_password) {
       item.password = '******'
-      item.content = '******'
     }
   }
   return {
