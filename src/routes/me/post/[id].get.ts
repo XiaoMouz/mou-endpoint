@@ -43,7 +43,7 @@ export default defineEventHandler(async (evt) => {
       data: result.data,
     }
   }
-  if (result.data.password !== evt.context.query.password) {
+  if (result.data.password !== getQuery(evt).password) {
     setResponseStatus(evt, 403, 'Wrong Password')
     result.data.password = '******'
     result.data.content = ''
