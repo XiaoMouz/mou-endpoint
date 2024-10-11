@@ -10,4 +10,3 @@ dist
 .netlify
 .vercel
 .wrangler
-wrangler.toml

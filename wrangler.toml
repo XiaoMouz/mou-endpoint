@@ -1,0 +1,14 @@
+name = "mou-endpoint"
+main = "./.output/server/index.mjs"
+workers_dev = true
+compatibility_date = "2023-12-01"
+
+rules = [{ type = "ESModule", globs = ["**/*.js", "**/*.mjs"] }]
+
+[site]
+bucket = ".output/public"
+
+
+[[kv_namespaces]]
+binding = "KV_STORAGE"
+id = "17b42a11c12748629254b70cc46ba084"
