@@ -9,6 +9,6 @@ const supbase = createClient<Database>(
   env.SUPABASE_SERVICE_KEY || env.SUPABASE_KEY
 )
 
-export function useCleint() {
+export function useClient() {
   return supbase
 }

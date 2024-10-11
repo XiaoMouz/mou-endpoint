@@ -3,10 +3,10 @@ import { type Database, type Tables } from '~/types/database.types'
 import { type Node } from '~/types/node'
 import { type Result } from '~/types/speedtest'
 import { testNode } from '~/utils/network'
-import { useCleint } from '~/utils/supabase'
+import { useClient } from '~/utils/supabase'
 
 export default defineEventHandler(async (event) => {
-  const client = useCleint()
+  const client = useClient()
   const { data } = await client
     .from('datasources')
     .select('*')
@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     .eq('type', 'net-node')
     .returns<Tables<'datasources'>[]>()
   if (!data) {
+    setResponseStatus(event, 404, 'Not Found')
     return {
       message: 'Failed',
       error: 'No data available - empty db result',
@@ -25,6 +26,7 @@ export default defineEventHandler(async (event) => {
     content = JSON.parse(JSON.stringify(data[0].content))
   }
   if (content.length === 0) {
+    setResponseStatus(event, 404, 'Not Found')
     return {
       message: 'Failed',
       error: 'No content available - empty array',

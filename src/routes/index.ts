@@ -9,5 +9,10 @@ export default defineEventHandler((event) => {
       'all node test records': `${protocol}://${host}/node/record`,
       'node test record': `${protocol}://${host}/node/record/:id`,
     },
+    scheduled: `${protocol}://${host}/__scheduled`,
+    post: {
+      'posts(only title)': `${protocol}://${host}/me/post/`,
+      'post(index or slug)': `${protocol}://${host}/me/post/:id`,
+    },
   }
 })

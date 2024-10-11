@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
     }
   }
   if (await haveValue('test-result')) {
+    setResponseStatus(event, 409, 'Conflict')
     return {
       message: 'Init already done',
     }
