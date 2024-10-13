@@ -72,6 +72,69 @@ export type Database = {
           }
         ]
       }
+      comment: {
+        Row: {
+          anonymous_mail: string | null
+          anonymous_name: string | null
+          bind_content: number | null
+          bind_ticket: number | null
+          content: string
+          create_by: string | null
+          create_time: string
+          id: number
+          is_anonymous: boolean
+          parent_comment: number | null
+          state: Database['public']['Enums']['CommentState']
+          type: Database['public']['Enums']['CommentParentType']
+          update_time: string
+        }
+        Insert: {
+          anonymous_mail?: string | null
+          anonymous_name?: string | null
+          bind_content?: number | null
+          bind_ticket?: number | null
+          content: string
+          create_by?: string | null
+          create_time?: string
+          id?: number
+          is_anonymous?: boolean
+          parent_comment?: number | null
+          state?: Database['public']['Enums']['CommentState']
+          type: Database['public']['Enums']['CommentParentType']
+          update_time?: string
+        }
+        Update: {
+          anonymous_mail?: string | null
+          anonymous_name?: string | null
+          bind_content?: number | null
+          bind_ticket?: number | null
+          content?: string
+          create_by?: string | null
+          create_time?: string
+          id?: number
+          is_anonymous?: boolean
+          parent_comment?: number | null
+          state?: Database['public']['Enums']['CommentState']
+          type?: Database['public']['Enums']['CommentParentType']
+          update_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'comment_bind_content_fkey'
+            columns: ['bind_content']
+            isOneToOne: false
+            referencedRelation: 'contents'
+            referencedColumns: ['cid']
+          },
+          {
+            foreignKeyName: 'comment_bind_ticket_fkey'
+            columns: ['bind_ticket']
+            isOneToOne: false
+            referencedRelation: 'ticket'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       contents: {
         Row: {
           allow_anonymous_comment: boolean
@@ -88,7 +151,7 @@ export type Database = {
           password: string | null
           slug: string | null
           stars_num: number
-          state: Database['public']['Enums']['ContentStatus']
+          state: Database['public']['Enums']['ContentState']
           title: string
           type: Database['public']['Enums']['ContentType']
           update_time: string
@@ -109,7 +172,7 @@ export type Database = {
           password?: string | null
           slug?: string | null
           stars_num?: number
-          state?: Database['public']['Enums']['ContentStatus']
+          state?: Database['public']['Enums']['ContentState']
           title: string
           type?: Database['public']['Enums']['ContentType']
           update_time?: string
@@ -130,7 +193,7 @@ export type Database = {
           password?: string | null
           slug?: string | null
           stars_num?: number
-          state?: Database['public']['Enums']['ContentStatus']
+          state?: Database['public']['Enums']['ContentState']
           title?: string
           type?: Database['public']['Enums']['ContentType']
           update_time?: string
@@ -551,6 +614,57 @@ export type Database = {
         }
         Relationships: []
       }
+      ticket: {
+        Row: {
+          assignee: string | null
+          content: string
+          create_at: string
+          create_by: string
+          forward_to: number | null
+          id: number
+          state: Database['public']['Enums']['TicketState']
+          title: string
+          update_at: string
+        }
+        Insert: {
+          assignee?: string | null
+          content: string
+          create_at?: string
+          create_by?: string
+          forward_to?: number | null
+          id?: number
+          state?: Database['public']['Enums']['TicketState']
+          title: string
+          update_at?: string
+        }
+        Update: {
+          assignee?: string | null
+          content?: string
+          create_at?: string
+          create_by?: string
+          forward_to?: number | null
+          id?: number
+          state?: Database['public']['Enums']['TicketState']
+          title?: string
+          update_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ticket_assignee_fkey'
+            columns: ['assignee']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ticket_create_by_fkey'
+            columns: ['create_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -565,7 +679,16 @@ export type Database = {
       }
     }
     Enums: {
-      ContentStatus:
+      CommentParentType: 'content' | 'ticket' | 'comment'
+      CommentState:
+        | 'deleted'
+        | 'hidden'
+        | 'limited'
+        | 'mention-only'
+        | 'normal'
+        | 'close'
+        | 'review'
+      ContentState:
         | 'publish'
         | 'draft'
         | 'waiting'
@@ -577,6 +700,7 @@ export type Database = {
       DataSourceType: 'net-node' | 'service'
       ProxyState: 'active' | 'limited' | 'expired' | 'untrust' | 'disactive'
       ProxyType: 'unlimited' | 'toll' | 'sponsor' | 'limited' | 'new' | 'test'
+      TicketState: 'opened' | 'solved' | 'closed' | 'moved' | 'frozen' | 'muted'
     }
     CompositeTypes: {
       [_ in never]: never
