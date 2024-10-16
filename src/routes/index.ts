@@ -13,6 +13,7 @@ export default defineEventHandler((event) => {
     post: {
       'posts(only title)': `${protocol}://${host}/me/post/`,
       'post(index or slug)': `${protocol}://${host}/me/post/:id`,
+      
     },
   }
 })

@@ -9,7 +9,7 @@ export default defineEventHandler(async (evt) => {
   const { data } = await client
     .from('contents')
     .select(
-      'cid, title, create_time, update_time, password, have_password ,author, type,state,parent,allow_comment,allow_anonymous_comment,views_num,stars_num,description'
+      'cid, title, create_time, update_time, password,tags , have_password ,author, type,state,parent,allow_comment,allow_anonymous_comment,views_num,stars_num,description'
     )
     .eq('type', 'post')
     .eq('state', 'publish')
