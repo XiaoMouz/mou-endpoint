@@ -62,15 +62,7 @@ export type Database = {
           one_time?: boolean
           token?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'invite_codes_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       comment: {
         Row: {
@@ -85,6 +77,7 @@ export type Database = {
           is_anonymous: boolean
           parent_comment: number | null
           state: Database['public']['Enums']['CommentState']
+          tags: number[] | null
           type: Database['public']['Enums']['CommentParentType']
           update_time: string
         }
@@ -100,6 +93,7 @@ export type Database = {
           is_anonymous?: boolean
           parent_comment?: number | null
           state?: Database['public']['Enums']['CommentState']
+          tags?: number[] | null
           type: Database['public']['Enums']['CommentParentType']
           update_time?: string
         }
@@ -115,6 +109,7 @@ export type Database = {
           is_anonymous?: boolean
           parent_comment?: number | null
           state?: Database['public']['Enums']['CommentState']
+          tags?: number[] | null
           type?: Database['public']['Enums']['CommentParentType']
           update_time?: string
         }
@@ -152,6 +147,7 @@ export type Database = {
           slug: string | null
           stars_num: number
           state: Database['public']['Enums']['ContentState']
+          tags: number[] | null
           title: string
           type: Database['public']['Enums']['ContentType']
           update_time: string
@@ -173,6 +169,7 @@ export type Database = {
           slug?: string | null
           stars_num?: number
           state?: Database['public']['Enums']['ContentState']
+          tags?: number[] | null
           title: string
           type?: Database['public']['Enums']['ContentType']
           update_time?: string
@@ -194,20 +191,13 @@ export type Database = {
           slug?: string | null
           stars_num?: number
           state?: Database['public']['Enums']['ContentState']
+          tags?: number[] | null
           title?: string
           type?: Database['public']['Enums']['ContentType']
           update_time?: string
           views_num?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: 'contents_author_fkey'
-            columns: ['author']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       datasources: {
         Row: {
@@ -217,6 +207,7 @@ export type Database = {
           id: number
           read_only: boolean
           state: Database['public']['Enums']['DataSourceState'] | null
+          tags: number[] | null
           tips: string | null
           type: Database['public']['Enums']['DataSourceType']
           update_data: string
@@ -228,6 +219,7 @@ export type Database = {
           id?: number
           read_only?: boolean
           state?: Database['public']['Enums']['DataSourceState'] | null
+          tags?: number[] | null
           tips?: string | null
           type: Database['public']['Enums']['DataSourceType']
           update_data?: string
@@ -239,19 +231,12 @@ export type Database = {
           id?: number
           read_only?: boolean
           state?: Database['public']['Enums']['DataSourceState'] | null
+          tags?: number[] | null
           tips?: string | null
           type?: Database['public']['Enums']['DataSourceType']
           update_data?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'datasources_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       nowplaying: {
         Row: {
@@ -380,15 +365,7 @@ export type Database = {
           send_comment?: boolean | null
           update_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: 'permission_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -418,15 +395,7 @@ export type Database = {
           site_owner?: boolean
           username?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'profiles_id_fkey'
-            columns: ['id']
-            isOneToOne: true
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       proxy: {
         Row: {
@@ -480,15 +449,7 @@ export type Database = {
           type?: Database['public']['Enums']['ProxyType']
           used_traffice?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: 'proxy_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       role_bind: {
         Row: {
@@ -523,24 +484,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'role_bind_granted_by_fkey'
-            columns: ['granted_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
-          {
             foreignKeyName: 'role_bind_role_id_fkey'
             columns: ['role_id']
             isOneToOne: false
             referencedRelation: 'roles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'role_bind_user_id_fkey'
-            columns: ['user_id']
-            isOneToOne: false
-            referencedRelation: 'users'
             referencedColumns: ['id']
           }
         ]
@@ -577,13 +524,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'permission'
             referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'roles_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
           }
         ]
       }
@@ -594,6 +534,7 @@ export type Database = {
           create_by: string | null
           id: number
           name: string
+          useFor: Database['public']['Enums']['TagsUseFor'] | null
           warn: boolean
         }
         Insert: {
@@ -602,6 +543,7 @@ export type Database = {
           create_by?: string | null
           id?: number
           name: string
+          useFor?: Database['public']['Enums']['TagsUseFor'] | null
           warn?: boolean
         }
         Update: {
@@ -610,6 +552,7 @@ export type Database = {
           create_by?: string | null
           id?: number
           name?: string
+          useFor?: Database['public']['Enums']['TagsUseFor'] | null
           warn?: boolean
         }
         Relationships: []
@@ -623,6 +566,7 @@ export type Database = {
           forward_to: number | null
           id: number
           state: Database['public']['Enums']['TicketState']
+          tags: number[] | null
           title: string
           update_at: string
         }
@@ -634,6 +578,7 @@ export type Database = {
           forward_to?: number | null
           id?: number
           state?: Database['public']['Enums']['TicketState']
+          tags?: number[] | null
           title: string
           update_at?: string
         }
@@ -645,25 +590,11 @@ export type Database = {
           forward_to?: number | null
           id?: number
           state?: Database['public']['Enums']['TicketState']
+          tags?: number[] | null
           title?: string
           update_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'ticket_assignee_fkey'
-            columns: ['assignee']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'ticket_create_by_fkey'
-            columns: ['create_by']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
     }
     Views: {
@@ -700,6 +631,13 @@ export type Database = {
       DataSourceType: 'net-node' | 'service'
       ProxyState: 'active' | 'limited' | 'expired' | 'untrust' | 'disactive'
       ProxyType: 'unlimited' | 'toll' | 'sponsor' | 'limited' | 'new' | 'test'
+      TagsUseFor:
+        | 'any'
+        | 'comment'
+        | 'content'
+        | 'ticket'
+        | 'grant-only'
+        | 'ticket-select'
       TicketState: 'opened' | 'solved' | 'closed' | 'moved' | 'frozen' | 'muted'
     }
     CompositeTypes: {
@@ -788,4 +726,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
   ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+  : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema['CompositeTypes']
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    : never = never
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+  ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
   : never
