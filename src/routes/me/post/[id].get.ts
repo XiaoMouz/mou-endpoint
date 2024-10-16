@@ -31,7 +31,10 @@ export default defineEventHandler(async (evt) => {
     return {
       message: 'Failed',
       error: 'Password required',
-      tips: 'use post send password',
+      tips: {
+        msg: 'Please use Post method and provide password item to access this post',
+        password: 'password',
+      },
       data: result.data,
     }
   }

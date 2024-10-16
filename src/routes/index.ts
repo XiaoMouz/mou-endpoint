@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
     post: {
       'posts(only title)': `${protocol}://${host}/me/post/`,
       'post(index or slug)': `${protocol}://${host}/me/post/:id`,
-      
+      'use post to access password protected post': `${protocol}://${host}/me/post/:id`,
     },
   }
 })

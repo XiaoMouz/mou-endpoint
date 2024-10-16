@@ -22,7 +22,6 @@ export default defineEventHandler(async (evt) => {
       error: 'No data available - empty db result',
     }
   }
-  // for each检查数据中是否有密码，若有将密码和内容删除
 
   for (const item of data) {
     if (item.have_password) {
