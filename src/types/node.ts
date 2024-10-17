@@ -1,8 +1,9 @@
 export interface Node {
-  id: string
+  id: number
   title: string
   address: string
   description: string | undefined
   serviceFrom: string
   controledStatus: 'up' | 'down' | 'unknown' | 'maintenance'
+  tags: string[]
 }
