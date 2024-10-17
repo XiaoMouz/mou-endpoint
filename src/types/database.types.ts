@@ -411,6 +411,7 @@ export type Database = {
           state: Database['public']['Enums']['ProxyState']
           subscription_url: string
           sum_traffic: number | null
+          tags: number[] | null
           traffic_node_regex: string | null
           type: Database['public']['Enums']['ProxyType']
           used_traffice: number | null
@@ -428,6 +429,7 @@ export type Database = {
           state?: Database['public']['Enums']['ProxyState']
           subscription_url: string
           sum_traffic?: number | null
+          tags?: number[] | null
           traffic_node_regex?: string | null
           type?: Database['public']['Enums']['ProxyType']
           used_traffice?: number | null
@@ -445,6 +447,7 @@ export type Database = {
           state?: Database['public']['Enums']['ProxyState']
           subscription_url?: string
           sum_traffic?: number | null
+          tags?: number[] | null
           traffic_node_regex?: string | null
           type?: Database['public']['Enums']['ProxyType']
           used_traffice?: number | null
@@ -636,8 +639,11 @@ export type Database = {
         | 'comment'
         | 'content'
         | 'ticket'
+        | 'proxy'
         | 'grant-only'
         | 'ticket-select'
+        | 'datasource'
+        | 'mark'
       TicketState: 'opened' | 'solved' | 'closed' | 'moved' | 'frozen' | 'muted'
     }
     CompositeTypes: {
