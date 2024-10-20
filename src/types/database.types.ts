@@ -238,6 +238,44 @@ export type Database = {
         }
         Relationships: []
       }
+      grant_proxy: {
+        Row: {
+          allow_select_node_num: number
+          cache_node_id: number[] | null
+          id: number
+          origin_node_data: Json | null
+          proxy_id: string
+          use_regex_match_node: string | null
+          user_id: string
+        }
+        Insert: {
+          allow_select_node_num?: number
+          cache_node_id?: number[] | null
+          id?: number
+          origin_node_data?: Json | null
+          proxy_id: string
+          use_regex_match_node?: string | null
+          user_id: string
+        }
+        Update: {
+          allow_select_node_num?: number
+          cache_node_id?: number[] | null
+          id?: number
+          origin_node_data?: Json | null
+          proxy_id?: string
+          use_regex_match_node?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'grant_proxy_proxy_id_fkey'
+            columns: ['proxy_id']
+            isOneToOne: false
+            referencedRelation: 'proxy'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       nowplaying: {
         Row: {
           icon: string | null
@@ -369,6 +407,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          allow_proxy_group_num: number | null
           avatar_link: string | null
           display_name: string | null
           emails: string[] | null
@@ -378,6 +417,7 @@ export type Database = {
           username: string
         }
         Insert: {
+          allow_proxy_group_num?: number | null
           avatar_link?: string | null
           display_name?: string | null
           emails?: string[] | null
@@ -387,6 +427,7 @@ export type Database = {
           username: string
         }
         Update: {
+          allow_proxy_group_num?: number | null
           avatar_link?: string | null
           display_name?: string | null
           emails?: string[] | null
