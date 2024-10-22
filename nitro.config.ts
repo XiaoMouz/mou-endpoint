@@ -4,8 +4,8 @@ export default defineNitroConfig({
   srcDir: './src',
   routeRules: {
     '/**': {
-      cors: true
-    }
+      cors: true,
+    },
   },
   commonJS: {
     requireReturnsDefault: 'preferred',
@@ -15,11 +15,19 @@ export default defineNitroConfig({
       driver: 'cloudflare-kv-binding',
       binding: 'KV_STORAGE',
     },
+    blob: {
+      driver: 'cloudflareR2Binding',
+      binding: 'FILE_BLOB',
+    },
   },
   devStorage: {
     kv: {
       driver: 'fs',
       base: './.nitro/db',
+    },
+    blob: {
+      driver: 'fs',
+      base: './.nitro/blob',
     },
   },
   typescript: {

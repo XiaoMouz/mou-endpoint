@@ -1,6 +1,7 @@
 import { useClient } from '~/utils/supabase'
 export default defineEventHandler(async (evt) => {
   if (!evt.context.params) {
+    setResponseStatus(evt, 404, 'Not Found')
     return {
       message: 'Failed',
       error: 'No data available - empty db result',

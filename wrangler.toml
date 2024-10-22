@@ -13,6 +13,11 @@ bucket = ".output/public"
 binding = "KV_STORAGE"
 id = "17b42a11c12748629254b70cc46ba084"
 
-d1_databases = [
-    { binding = "DB", database_name = "api-database", database_id = "138ef67c-8cd5-4b40-9dc1-1503b62c1175" },
-]
+[[d1_databases]]
+binding = "DB"
+database_name = "api-database"
+database_id = "138ef67c-8cd5-4b40-9dc1-1503b62c1175"
+
+[[r2_buckets]]
+binding = "FILE_BLOB"
+bucket_name = "file-blob"
