@@ -15,6 +15,7 @@ export interface File {
 export interface Comment {
   id: string
   creater: string | 'anonymous'
+  mail: string | undefined
   fromIP: string
   content: string
 }

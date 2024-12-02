@@ -1,5 +1,6 @@
 import { useClient } from '~/utils/supabase'
 import { z } from 'zod'
+import { getSeededUUID } from '~/utils/tools'
 export default defineEventHandler(async (evt) => {
   let body
   try {
@@ -30,7 +31,6 @@ export default defineEventHandler(async (evt) => {
     email: data.email,
     password: data.password,
   })
-
   if (res.error) {
     setResponseStatus(evt, res.error.status)
     return {
@@ -38,11 +38,15 @@ export default defineEventHandler(async (evt) => {
       error: res.error.message,
     }
   }
+  const token = getSeededUUID('xxxxyyyyxxxxyxxx')
+  const refreashToken = getSeededUUID('xxxxyyyyxxx')
+  
   return {
     message: 'OK',
     data: {
       username: res.data.user.user_metadata.username,
       email: res.data.user.email,
     },
+    session: {},
   }
 })
