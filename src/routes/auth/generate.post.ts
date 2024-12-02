@@ -2,6 +2,7 @@ import { useClient } from '~/utils/supabase'
 import { z } from 'zod'
 import { getRandomString } from '~/utils/tools'
 import { TokenSession } from '~/types/token.type'
+import { setValue } from '~/model/token-kv'
 export default defineEventHandler(async (evt) => {
   let body
   try {
@@ -39,8 +40,8 @@ export default defineEventHandler(async (evt) => {
       error: res.error.message,
     }
   }
-  const token = getRandomString('xxxx-yyyy-xxxx-yxxx')
-  const refreshToken = getRandomString('xxxxyyyyxxx')
+  const token = getRandomString('xxxxyyyyxxxxyxxx')
+  const refreshToken = getRandomString('xyxxyyyyxxyx')
   const session: TokenSession = {
     token,
     refreshToken,
@@ -52,6 +53,7 @@ export default defineEventHandler(async (evt) => {
       email: res.data.user.user_metadata.email,
     },
   }
+  await setValue(token, data.email, session)
 
   return {
     message: 'OK',
