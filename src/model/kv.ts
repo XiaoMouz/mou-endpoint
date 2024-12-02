@@ -16,3 +16,7 @@ export async function haveValue(key: string) {
   const result = await storage.hasItem(key)
   return result
 }
+export async function deleteValue(key: string) {
+  const storage = useStorage('kv')
+  await storage.removeItem(key)
+}

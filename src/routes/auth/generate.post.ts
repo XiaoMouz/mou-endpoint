@@ -1,6 +1,7 @@
 import { useClient } from '~/utils/supabase'
 import { z } from 'zod'
-import { getSeededUUID } from '~/utils/tools'
+import { getRandomString } from '~/utils/tools'
+import { TokenSession } from '~/types/token.type'
 export default defineEventHandler(async (evt) => {
   let body
   try {
@@ -38,15 +39,26 @@ export default defineEventHandler(async (evt) => {
       error: res.error.message,
     }
   }
-  const token = getSeededUUID('xxxxyyyyxxxxyxxx')
-  const refreashToken = getSeededUUID('xxxxyyyyxxx')
-  
+  const token = getRandomString('xxxx-yyyy-xxxx-yxxx')
+  const refreshToken = getRandomString('xxxxyyyyxxx')
+  const session: TokenSession = {
+    token,
+    refreshToken,
+    expireAt: 30 * 24 * 60 * 60 * 1000 + Date.now(),
+    createdAt: Date.now(),
+    user: {
+      id: res.data.user.id,
+      username: res.data.user.user_metadata.username,
+      email: res.data.user.user_metadata.email,
+    },
+  }
+
   return {
     message: 'OK',
     data: {
       username: res.data.user.user_metadata.username,
       email: res.data.user.email,
     },
-    session: {},
+    session,
   }
 })
