@@ -2,14 +2,19 @@ export default defineNitroConfig({
   preset: 'cloudflare-module',
   minify: false,
   srcDir: './src',
+
   routeRules: {
     '/**': {
       cors: true,
     },
   },
+
   commonJS: {
     requireReturnsDefault: 'preferred',
   },
+
+  apiBaseURL: '/',
+  errorHandler: '~/error.ts',
   storage: {
     kv: {
       driver: 'cloudflare-kv-binding',
@@ -20,6 +25,7 @@ export default defineNitroConfig({
       binding: 'FILE_BLOB',
     },
   },
+
   devStorage: {
     kv: {
       driver: 'fs',
@@ -30,6 +36,7 @@ export default defineNitroConfig({
       base: './.nitro/blob',
     },
   },
+
   typescript: {
     strict: true,
     tsConfig: {
@@ -42,4 +49,6 @@ export default defineNitroConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-12-03',
 })

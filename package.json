@@ -23,6 +23,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.46.2",
     "bs58": "^6.0.0",
+    "h3": "^1.13.0",
     "nitropack": "^2.10.4",
     "unstorage": "^1.13.1",
     "wrangler": "^3.91.0",

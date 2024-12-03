@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { H3Event } from 'h3'
 
 export function getRandomString(
   format: string = 'xxxx-yyyy',
@@ -23,4 +24,32 @@ export function getRandomString(
   }
 
   return result
+}
+
+export function getAuthToken(evt: H3Event): {
+  token: string
+  email: string
+} | null {
+  const headerAuth = getHeader(evt, 'Authorization')
+  if (headerAuth) {
+    return {
+      token: headerAuth.split(':')[0],
+      email: headerAuth.split(':')[1],
+    }
+  }
+  const cookieToken = getCookie(evt, 'token')
+  const cookieEmail = getCookie(evt, 'email')
+  if (cookieToken && cookieEmail) {
+    return {
+      token: cookieToken,
+      email: cookieEmail,
+    }
+  }
+  return null
+}
+
+export function setAuthToken(evt: H3Event, token: string, email: string): void {
+  setHeader(evt, 'Authorization', `${token}:${email}`)
+  setCookie(evt, 'token', token)
+  setCookie(evt, 'email', email)
 }

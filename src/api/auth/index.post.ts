@@ -1,8 +1,14 @@
 import { useClient } from '~/utils/supabase'
 import { z } from 'zod'
-import { getRandomString } from '~/utils/tools'
-import { TokenSession } from '~/types/token.type'
-import { setValue } from '~/model/token-kv'
+import { getRandomString, setAuthToken } from '~/utils/tools'
+import { TokenSession } from '~/types/user.type'
+import {
+  getRecord,
+  getSessionByEmail,
+  initRecord,
+  setValue,
+} from '~/model/user'
+
 export default defineEventHandler(async (evt) => {
   let body
   try {
@@ -40,7 +46,19 @@ export default defineEventHandler(async (evt) => {
       error: res.error.message,
     }
   }
-  const token = getRandomString('xxxxyyyyxxxxyxxx')
+
+  let origin = await getSessionByEmail(data.email)
+  if (origin) {
+    origin.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
+    origin.refreshToken = getRandomString('xyxxyyyyxxyx')
+    await setValue(origin.token, data.email, origin)
+    return {
+      message: 'OK',
+      session: origin,
+    }
+  }
+
+  const token = getRandomString('xxxxyyxxxyxxyx')
   const refreshToken = getRandomString('xyxxyyyyxxyx')
   const session: TokenSession = {
     token,
@@ -53,14 +71,14 @@ export default defineEventHandler(async (evt) => {
       email: res.data.user.user_metadata.email,
     },
   }
-  await setValue(token, data.email, session)
 
+  await setValue(token, data.email, session)
+  setAuthToken(evt, token, data.email)
+  if (!await getRecord(data.email)) {
+    initRecord(data.email, res.data.user.user_metadata.username)
+  }
   return {
     message: 'OK',
-    data: {
-      username: res.data.user.user_metadata.username,
-      email: res.data.user.email,
-    },
     session,
   }
 })
