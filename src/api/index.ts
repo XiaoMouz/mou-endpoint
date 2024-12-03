@@ -15,5 +15,22 @@ export default defineEventHandler((event) => {
       'post(index or slug)': `${protocol}://${host}/me/post/:id`,
       'use post to access password protected post': `${protocol}://${host}/me/post/:id`,
     },
+    auth: {
+      'get token(post)': '${protocol}://${host}/auth/',
+      'reset token (if didnt have header use post)':
+        '${protocol}://${host}/auth/reset',
+      'refresh token': '${protocol}://${host}/auth/refresh',
+    },
+    tool: {
+      file: {
+        'upload file(need auth)': '${protocol}://${host}/tool/file/',
+        'get yours all files(need auth)': '${protocol}://${host}/tool/file/',
+        'get file': '${protocol}://${host}/tool/file/:id',
+      },
+      copyboard: {
+        todo: '${protocol}://${host}/tool/copyboard/',
+        'get copyboard data': '${protocol}://${host}/tool/copyboard/:id',
+      },
+    },
   }
 })
