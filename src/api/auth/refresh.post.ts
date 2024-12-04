@@ -69,13 +69,12 @@ export default defineEventHandler(async (evt) => {
   session.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
   session.refreshToken = getRandomString('xyxxyyyyxxyx')
   const client = useClient()
-  const profile = client
+  const { data: profile } = await client
     .from('profiles')
     .select('*')
-    .eq('id', session.user.id)
+    .eq('email', session.user.email)
     .single()
-  session.user.avatar = (await profile).data?.avatar_link || ''
-
+  session.user.avatar = profile?.avatar_link || undefined
   await setValue(session.token, session.user.email, session)
   setAuthToken(evt, session.token, session.user.email)
   let record = await getRecord(session.user.email)

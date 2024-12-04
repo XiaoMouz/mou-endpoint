@@ -7,7 +7,7 @@ export interface TokenSession {
     id: string
     username: string
     email: string
-    avatar: string
+    avatar?: string
   }
   refreshToken: string
   expireAt: number
