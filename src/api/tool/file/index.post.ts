@@ -1,6 +1,7 @@
 import { auth } from '~/middleware/auth'
-import { setFileRaw } from '~/model/file'
-import { getRecord } from '~/model/user'
+import { setFileInfo, setFileRaw } from '~/model/file'
+import { getRecord, getValue, initRecord, setRecord } from '~/model/user'
+import { File } from '~/types/tool-route/file.types'
 import { getAuthToken, getRandomString } from '~/utils/tools'
 
 export default defineEventHandler({
@@ -8,8 +9,13 @@ export default defineEventHandler({
   handler: async (evt) => {
     const identity = getAuthToken(evt)
     if (!identity) throw createError({ message: '倒反天罡' })
+    const username = await getValue(identity.token, identity.email)
+    if (!username) throw createError({ message: 'Need init user record' })
     const record = await getRecord(identity.email)
-
+    if (!record) {
+      initRecord(identity.email, username.user.username)
+      throw createError({ message: 'Need init user record' })
+    }
     const data = await readFormData(evt).catch((e) => {
       console.log(e)
       return null
@@ -25,7 +31,7 @@ export default defineEventHandler({
       const buffer = Buffer.from(arrayBuffer)
       await setFileRaw(id, buffer)
     })
-    record?.files.push({
+    let info: File = {
       id,
       uploader: identity.email,
       createdAt: Date.now(),
@@ -38,11 +44,14 @@ export default defineEventHandler({
       fileSize: blob.size,
       description: data.get('description')?.toString() || undefined,
       comments: [],
-    })
+    }
+    record?.files.push(info)
+    await setRecord(identity.email, record)
+    await setFileInfo(id, info)
 
     return {
       message: 'OK',
-      id,
+      info,
     }
   },
 })
