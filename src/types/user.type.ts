@@ -17,7 +17,7 @@ export interface TokenSession {
 export interface UserRecord {
   email: string
   username: string
-  avatar: string
+  avatar?: string
   files: File[]
   copyboards: Content[]
 }
