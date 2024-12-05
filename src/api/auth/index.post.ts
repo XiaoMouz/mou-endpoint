@@ -50,7 +50,6 @@ export default defineEventHandler(async (evt) => {
   let origin = await getSessionByEmail(data.email)
   if (origin) {
     origin.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
-    origin.refreshToken = getRandomString('xyxxyyyyxxyx')
     await setValue(origin.token, data.email, origin)
     return {
       message: 'OK',

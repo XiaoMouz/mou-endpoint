@@ -2,7 +2,13 @@ import { useClient } from '~/utils/supabase'
 import { z } from 'zod'
 import { getRandomString, setAuthToken } from '~/utils/tools'
 import { TokenSession } from '~/types/user.type'
-import { getSessionByToken, getValue, setValue } from '~/model/user'
+import {
+  getRecord,
+  getSessionByToken,
+  getValue,
+  setRecord,
+  setValue,
+} from '~/model/user'
 export default defineEventHandler(async (evt) => {
   let body
   try {
@@ -62,9 +68,20 @@ export default defineEventHandler(async (evt) => {
 
   session.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
   session.refreshToken = getRandomString('xyxxyyyyxxyx')
+  const client = useClient()
+  const profile = client
+    .from('profiles')
+    .select('*')
+    .eq('id', session.user.id)
+    .single()
+  session.user.avatar = (await profile).data?.avatar_link || ''
 
   await setValue(session.token, session.user.email, session)
   setAuthToken(evt, session.token, session.user.email)
+  let record = await getRecord(session.user.email)
+  record && (record.avatar = session.user.avatar)
+  record && (await setRecord(session.user.email, record))
+
   return {
     message: 'OK',
     session,

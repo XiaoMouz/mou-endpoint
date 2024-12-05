@@ -31,6 +31,7 @@ export default defineEventHandler({
         id: old.user.id,
         username: old.user.username,
         email: old.user.email,
+        avatar: old.user.avatar,
       },
     }
 

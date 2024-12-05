@@ -31,6 +31,7 @@ export default defineEventHandler(async (evt) => {
     }
   }
   const owner = await getRecord(info.uploader)
+  console.log(owner?.avatar)
   if (info.private) {
     const auth = getAuthToken(evt)
     if (!auth) {
