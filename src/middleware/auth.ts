@@ -10,4 +10,4 @@ export const auth = defineRequestMiddleware((req) => {
   }
 })
 
-export default defineEventHandler(async (evt) => {})
+export default defineEventHandler((evt) => {})
