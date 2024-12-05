@@ -61,10 +61,15 @@ export async function setRecord(email: string, value: UserRecord) {
   await setTValue(`record:${email}`, value)
 }
 
-export async function initRecord(email: string, username: string) {
+export async function initRecord(
+  email: string,
+  username: string,
+  avatar: string
+) {
   const records = await getRecord(email)
   if (!records) {
     await setRecord(email, {
+      avatar,
       email,
       username,
       files: [],

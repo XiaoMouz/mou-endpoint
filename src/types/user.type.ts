@@ -7,6 +7,7 @@ export interface TokenSession {
     id: string
     username: string
     email: string
+    avatar: string
   }
   refreshToken: string
   expireAt: number
@@ -16,6 +17,7 @@ export interface TokenSession {
 export interface UserRecord {
   email: string
   username: string
+  avatar: string
   files: File[]
   copyboards: Content[]
 }

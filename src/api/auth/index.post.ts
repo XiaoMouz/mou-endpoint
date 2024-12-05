@@ -69,13 +69,18 @@ export default defineEventHandler(async (evt) => {
       id: res.data.user.id,
       username: res.data.user.user_metadata.username,
       email: res.data.user.user_metadata.email,
+      avatar: res.data.user.user_metadata.avatar_url,
     },
   }
 
   await setValue(token, data.email, session)
   setAuthToken(evt, token, data.email)
   if (!(await getRecord(data.email))) {
-    initRecord(data.email, res.data.user.user_metadata.username)
+    initRecord(
+      data.email,
+      res.data.user.user_metadata.username,
+      res.data.user.user_metadata.avatar_url
+    )
   }
   return {
     message: 'OK',

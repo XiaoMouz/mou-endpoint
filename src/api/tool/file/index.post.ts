@@ -11,11 +11,6 @@ export default defineEventHandler({
     if (!identity) throw createError({ message: '倒反天罡' })
     const username = await getValue(identity.token, identity.email)
     if (!username) throw createError({ message: 'Need init user record' })
-    const record = await getRecord(identity.email)
-    if (!record) {
-      initRecord(identity.email, username.user.username)
-      throw createError({ message: 'Need init user record' })
-    }
     const data = await readFormData(evt).catch((e) => {
       console.log(e)
       return null
@@ -45,8 +40,6 @@ export default defineEventHandler({
       description: data.get('description')?.toString() || undefined,
       comments: [],
     }
-    record?.files.push(info)
-    await setRecord(identity.email, record)
     await setFileInfo(id, info)
 
     return {
