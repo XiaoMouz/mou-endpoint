@@ -18,6 +18,6 @@ export interface UserRecord {
   email: string
   username: string
   avatar?: string
-  files: File[]
-  copyboards: Content[]
+  files: { id: string; name: string }[]
+  copyboards: { id: string; name: string }[]
 }

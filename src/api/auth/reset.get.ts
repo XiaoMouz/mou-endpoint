@@ -5,7 +5,7 @@ import { getAuthToken, getRandomString, setAuthToken } from '~/utils/tools'
 export default defineEventHandler({
   onRequest: auth,
   handler: async (evt) => {
-    const headToken = getAuthToken(evt)
+    const headToken = await getAuthToken(evt)
     if (!headToken) {
       return {
         message: 'Failed',

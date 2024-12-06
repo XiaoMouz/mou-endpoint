@@ -7,7 +7,7 @@ import { getAuthToken, getRandomString } from '~/utils/tools'
 export default defineEventHandler({
   onRequest: auth,
   handler: async (evt) => {
-    const identity = getAuthToken(evt)
+    const identity = await getAuthToken(evt)
     if (!identity) throw createError({ message: '倒反天罡' })
     const username = await getValue(identity.token, identity.email)
     if (!username) throw createError({ message: 'Need init user record' })

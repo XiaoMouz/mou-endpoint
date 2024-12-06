@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import { H3Event } from 'h3'
+import { getValue } from '~/model/user'
 
 export function getRandomString(
   format: string = 'xxxx-yyyy',
@@ -26,13 +27,14 @@ export function getRandomString(
   return result
 }
 
-export function getAuthToken(evt: H3Event): {
+export async function getAuthToken(evt: H3Event): Promise<{
   token: string
   email: string
-} | null {
+} | null> {
   const headerAuth = getHeader(evt, 'Authorization')
+  let auth
   if (headerAuth) {
-    return {
+    auth = {
       token: headerAuth.split(':')[0],
       email: headerAuth.split(':')[1],
     }
@@ -40,11 +42,15 @@ export function getAuthToken(evt: H3Event): {
   const cookieToken = getCookie(evt, 'token')
   const cookieEmail = getCookie(evt, 'email')
   if (cookieToken && cookieEmail) {
-    return {
+    auth = {
       token: cookieToken,
       email: cookieEmail,
     }
   }
+  if (!auth) return null
+  const result = await getValue(auth.token, auth.email)
+  if (!result) return null
+  if (result?.expireAt < Date.now()) return auth
   return null
 }
 

@@ -26,7 +26,8 @@ export async function setFileInfo(key: string, value: File) {
     if (!record) {
       return
     }
-    record.files.push(value)
+    if (!record.files.find((file) => file.id === value.id))
+      record.files.push({ id: value.id, name: value.title })
     await setRecord(value.uploader, record)
   })
   await pushFileQueue(key)

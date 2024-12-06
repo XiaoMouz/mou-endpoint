@@ -51,7 +51,7 @@ export async function ensureCopyboard(evt: H3Event) {
     throw createError({ message: 'File is not active' })
   }
   if (info.private) {
-    const auth = getAuthToken(evt)
+    const auth = await getAuthToken(evt)
     if (!auth) {
       setResponseStatus(evt, 401)
       throw createError({ message: 'Need login' })

@@ -18,7 +18,7 @@ export default defineEventHandler(async (evt) => {
   }
   const owner = await getRecord(info.uploader)
   if (info.private) {
-    const auth = getAuthToken(evt)
+    const auth = await getAuthToken(evt)
     if (!auth) {
       setResponseStatus(evt, 401)
       return { message: 'Failed', error: 'Need login' }

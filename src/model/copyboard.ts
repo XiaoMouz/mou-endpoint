@@ -13,7 +13,8 @@ export async function setCopyboard(key: string, value: Content) {
     if (!record) {
       return
     }
-    record.copyboards.push(value)
+    if (!record.copyboards.find((i) => i.id === key))
+      record.copyboards.push({ id: key, name: value.name })
     await setRecord(value.uploader, record)
   })
   await pushCopyboardQueue(key)
@@ -29,7 +30,7 @@ export async function deleteCopyboard(key: string) {
     if (!record) {
       return
     }
-    record.copyboards = record.copyboards.filter((file) => file.id !== key)
+    record.copyboards = record.copyboards.filter((i) => i.id !== key)
     await setRecord(info.uploader, record)
   })
 

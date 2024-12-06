@@ -14,7 +14,7 @@ export default defineEventHandler({
   onRequest: auth,
   handler: async (evt) => {
     const info = await ensureFile(evt)
-    const sender = getAuthToken(evt)
+    const sender = await getAuthToken(evt)
     if (info.uploader !== sender?.email) {
       setResponseStatus(evt, 403)
       return { message: 'Failed', error: 'You not owner' }

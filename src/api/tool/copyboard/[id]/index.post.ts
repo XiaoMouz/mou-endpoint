@@ -1,7 +1,5 @@
-import { deleteFileInfo, getFileInfo } from '~/model/file'
 import { getRecord } from '~/model/user'
 import { ensureCopyboard, ensureFile } from '~/utils/check'
-import { getAuthToken } from '~/utils/tools'
 
 export default defineEventHandler(async (evt) => {
   const info = await ensureCopyboard(evt)

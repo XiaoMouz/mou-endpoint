@@ -13,7 +13,7 @@ export default defineEventHandler(async (evt) => {
     private: z.boolean().optional().default(false),
     password: z.string().optional(),
   })
-  const identity = getAuthToken(evt)
+  const identity = await getAuthToken(evt)
   let body
   try {
     body = await readValidatedBody(evt, obj.safeParse)

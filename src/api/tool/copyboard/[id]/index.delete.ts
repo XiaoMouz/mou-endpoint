@@ -4,7 +4,7 @@ import { getAuthToken } from '~/utils/tools'
 
 export default defineEventHandler(async (evt) => {
   const info = await ensureFile(evt)
-  const sender = getAuthToken(evt)
+  const sender = await getAuthToken(evt)
   if (info.uploader !== 'anonymous' && info.uploader !== sender?.email) {
     setResponseStatus(evt, 403)
     return { message: 'Failed', error: 'You not owner' }
