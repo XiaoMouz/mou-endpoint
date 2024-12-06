@@ -1,6 +1,7 @@
 import { H3Event } from 'h3'
-import { deleteFileInfo, getFileInfo } from '~/model/file'
+import { deleteFileInfo, getFileInfo, setFileInfo } from '~/model/file'
 import { File } from '~/types/tool-route/file.types'
+import { getRandomString } from './tools'
 
 export async function ensureFile(evt: H3Event) {
   const id = getRouterParam(evt, 'id')
@@ -21,6 +22,11 @@ export async function ensureFile(evt: H3Event) {
   if (info.status !== 'active') {
     setResponseStatus(evt, 403)
     throw createError({ message: 'File is not active' })
+  }
+  if (!info.downloadToken) {
+    const token = getRandomString('xxxxyyxxxyxxyx')
+    info.downloadToken = token
+    await setFileInfo(info.id, info)
   }
   return info
 }

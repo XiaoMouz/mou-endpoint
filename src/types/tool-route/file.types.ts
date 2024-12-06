@@ -10,6 +10,8 @@ export interface File {
   password: string | undefined
   fileSize: number
   description: string | undefined
+  downloadToken?: string
+  downloadTime: number
   comments: Comment[] | undefined
 }
 export interface Comment {

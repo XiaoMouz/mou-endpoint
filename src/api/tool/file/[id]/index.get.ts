@@ -1,7 +1,7 @@
-import { deleteFileInfo, getFileInfo } from '~/model/file'
+import { deleteFileInfo, getFileInfo, setFileInfo } from '~/model/file'
 import { getRecord } from '~/model/user'
 import { ensureFile } from '~/utils/check'
-import { getAuthToken } from '~/utils/tools'
+import { getAuthToken, getRandomString } from '~/utils/tools'
 
 export default defineEventHandler(async (evt) => {
   const info = await ensureFile(evt)
@@ -24,6 +24,12 @@ export default defineEventHandler(async (evt) => {
         name: owner?.username,
         avatar: owner?.avatar,
       },
+    }
+  }
+  if (info.password) {
+    return {
+      message: 'Failed',
+      error: 'Password require (Post)',
     }
   }
   return {

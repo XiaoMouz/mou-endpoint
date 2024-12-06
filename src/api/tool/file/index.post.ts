@@ -39,6 +39,7 @@ export default defineEventHandler({
       fileSize: blob.size,
       description: data.get('description')?.toString() || undefined,
       comments: [],
+      downloadTime: 0,
     }
     await setFileInfo(id, info)
 
