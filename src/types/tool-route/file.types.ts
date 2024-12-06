@@ -6,7 +6,7 @@ export interface File {
   modifiedAt: number
   expireAt: number
   r2Link: string
-  status: 'active' | 'disabled' | 'frozen'
+  status: 'active' | 'frozen'
   private: boolean
   password: string | undefined
   fileSize: number

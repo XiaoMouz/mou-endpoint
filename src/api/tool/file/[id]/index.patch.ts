@@ -19,7 +19,7 @@ export default defineEventHandler({
       const obj = z.object({
         title: z.string().optional(),
         expireAt: z.number().optional(),
-        status: z.enum(['active', 'disabled', 'frozen']).optional(),
+        status: z.enum(['active', 'frozen']).optional(),
         private: z.boolean().optional(),
         password: z.string().optional(),
         description: z.string().optional(),

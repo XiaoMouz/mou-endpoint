@@ -26,7 +26,7 @@ export async function popFileQueue() {
   return id
 }
 
-async function initQueue(key: string) {
+async function initQueue(key: 'file' | 'copyboard') {
   await setValue(`queue:${key}`, [])
 }
 
