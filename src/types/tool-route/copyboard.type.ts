@@ -2,10 +2,11 @@ export interface Content {
   id: string
   uploader: string | 'anonymous'
   createdAt: number
+  name: string
   modifiedAt: number
   expireAt: number
   content: string
-  status: 'active' | 'disabled' | 'frozen'
+  status: 'active' | 'frozen'
   private: boolean
   password: string | undefined
   history: ContentHistroy[]

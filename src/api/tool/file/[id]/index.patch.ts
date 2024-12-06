@@ -18,7 +18,7 @@ export default defineEventHandler({
     try {
       const obj = z.object({
         title: z.string().optional(),
-        expireAt: z.number().optional(),
+        delay: z.boolean().optional(),
         status: z.enum(['active', 'frozen']).optional(),
         private: z.boolean().optional(),
         password: z.string().optional(),
@@ -41,11 +41,12 @@ export default defineEventHandler({
       }
     }
     if (data.title) info.title = data.title
-    if (data.expireAt) info.expireAt = data.expireAt
     if (data.status) info.status = data.status
     if (data.private) info.private = data.private
     if (data.password) info.password = data.password
     if (data.description) info.description = data.description
+    if (data.delay) info.expireAt = Date.now() + 7 * 24 * 60 * 60 * 1000
+    info.modifiedAt = Date.now()
     await setFileInfo(info.id, info)
     return {
       message: 'OK',

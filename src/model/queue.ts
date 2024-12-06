@@ -20,8 +20,8 @@ export async function popFileQueue() {
     initQueue('file')
     return
   }
-
   const id = queue.shift()
+  queue.filter((v) => v !== id)
   setValue('queue:file', queue)
   return id
 }
@@ -52,6 +52,7 @@ export async function popCopyboardQueue() {
   }
 
   const id = queue.shift()
+  queue.filter((v) => v !== id)
   setValue('queue:copyboard', queue)
   return id
 }
