@@ -12,8 +12,7 @@ export default defineEventHandler({
     const username = await getValue(identity.token, identity.email)
     if (!username) throw createError({ message: 'Need init user record' })
     const data = await readFormData(evt).catch((e) => {
-      console.log(e)
-      return null
+      throw createError({ statusCode: 400, message: e.message })
     })
 
     if (!data)
@@ -30,6 +29,7 @@ export default defineEventHandler({
       id,
       uploader: identity.email,
       createdAt: Date.now(),
+      title: data.get('title')?.toString() || 'Untitled-' + Date.now(),
       modifiedAt: Date.now(),
       expireAt: Date.now() + 14 * 24 * 60 * 60 * 1000,
       r2Link: '',

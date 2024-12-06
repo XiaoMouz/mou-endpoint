@@ -2,6 +2,7 @@ export interface File {
   id: string
   uploader: string
   createdAt: number
+  title: string
   modifiedAt: number
   expireAt: number
   r2Link: string

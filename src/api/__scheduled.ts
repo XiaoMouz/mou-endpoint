@@ -36,10 +36,12 @@ export default defineEventHandler(async (event) => {
   let resData = (await getValue<Result[]>('test-result')) || []
   for (const node of content) {
     let result = await testNode(node)
-    let index = resData.findIndex((item: Result) => item.id === node.id)
+    let index = resData.findIndex(
+      (item: Result) => item.id === node.id.toString()
+    )
     if (index === -1) {
       resData.push({
-        id: node.id,
+        id: node.id.toString(),
         info: node,
         results: [result],
       })
