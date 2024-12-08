@@ -39,23 +39,23 @@ export async function getAuthToken(evt: H3Event): Promise<{
       email: headerAuth.split(':')[1],
     }
   }
-  const cookieToken = getCookie(evt, 'token')
-  const cookieEmail = getCookie(evt, 'email')
-  if (cookieToken && cookieEmail) {
+  const cookieToken = getCookie(evt, 'Authorization')
+  if (cookieToken) {
     auth = {
-      token: cookieToken,
-      email: cookieEmail,
+      token: cookieToken.split(':')[0],
+      email: cookieToken.split(':')[1],
     }
   }
+
   if (!auth) return null
   const result = await getValue(auth.token, auth.email)
   if (!result) return null
-  if (result?.expireAt < Date.now()) return auth
+
+  if (result.expireAt > Date.now()) return auth
   return null
 }
 
 export function setAuthToken(evt: H3Event, token: string, email: string): void {
   setHeader(evt, 'Authorization', `${token}:${email}`)
-  setCookie(evt, 'token', token)
-  setCookie(evt, 'email', email)
+  setCookie(evt, 'Authorization', token)
 }
