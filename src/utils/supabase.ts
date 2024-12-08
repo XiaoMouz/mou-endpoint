@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { Database } from '~/types/database.types'
 
-var supbase: any = null
+var supbase: SupabaseClient<Database> | null = null
 export function useClient() {
   if (!supbase) {
     const env = process.env
