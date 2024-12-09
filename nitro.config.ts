@@ -6,6 +6,11 @@ export default defineNitroConfig({
   routeRules: {
     '/**': {
       cors: true,
+      headers: {
+        'Access-Control-Allow-Origin': 'localhost, *.mou.best, mou.best',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+      },
     },
   },
 
