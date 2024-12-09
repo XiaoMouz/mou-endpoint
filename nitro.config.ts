@@ -7,7 +7,8 @@ export default defineNitroConfig({
     '/**': {
       cors: true,
       headers: {
-        'Access-Control-Allow-Origin': 'localhost, *.mou.best, mou.best',
+        'Access-Control-Allow-Origin':
+          'localhost, locahost:3000, localhost:*, *.mou.best, mou.best',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Authorization, Content-Type',
       },
