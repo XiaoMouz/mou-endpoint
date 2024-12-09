@@ -8,7 +8,7 @@ export function getRandomString(
 ): string {
   // 创建随机字符串生成器
   const random = (max: number) => {
-    const randomBuffer = crypto.randomBytes(1) // 每次生成一个随机字节
+    const randomBuffer = crypto.getRandomValues(new Uint8Array(1)) // 使用 Worker 环境中的随机数生成
     return randomBuffer[0] % max // 取模以限制范围
   }
 
@@ -18,7 +18,7 @@ export function getRandomString(
     if (format[i] === 'x') {
       result += charset[random(charset.length)]
     } else if (format[i] === 'y') {
-      result += random(charset.length - 1)
+      result += charset[random(charset.length)] // 修复此行，确保从 charset 中选择字符
     } else {
       result += format[i] // 保留其他字符，例如 '-'
     }
