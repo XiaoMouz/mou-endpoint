@@ -57,7 +57,7 @@ export default defineEventHandler(async (evt) => {
       id: res.data.user.id,
       username: res.data.user.user_metadata.username,
       email: res.data.user.user_metadata.email,
-      avatar: res.data.user.user_metadata.avatar_url,
+      avatar: res.data.user.user_metadata.avatar_link,
     },
   }
 
