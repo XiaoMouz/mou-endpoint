@@ -13,11 +13,11 @@ export default defineEventHandler((event) => {
     post: {
       'posts(only title)': `${protocol}://${host}/me/post/`,
       'post(index or slug)': `${protocol}://${host}/me/post/:id`,
-      'use post to access password protected post': `${protocol}://${host}/me/post/:id`,
+      'use password access protected post(post method)': `${protocol}://${host}/me/post/:id`,
     },
     auth: {
       'get token(post)': `${protocol}://${host}/auth/`,
-      'reset token (if didnt have header use post)': `${protocol}://${host}/auth/reset`,
+      "reset token (if didn't have header use post)": `${protocol}://${host}/auth/reset`,
       'refresh token': `${protocol}://${host}/auth/refresh`,
     },
     tool: {
@@ -27,8 +27,9 @@ export default defineEventHandler((event) => {
         'get file': `${protocol}://${host}/tool/file/:id`,
       },
       copyboard: {
-        todo: `${protocol}://${host}/tool/copyboard/`,
+        'get user copyboard list': `${protocol}://${host}/tool/copyboard/`,
         'get copyboard data': `${protocol}://${host}/tool/copyboard/:id`,
+        'new copyboard (post)': `${protocol}://${host}/tool/copyboard/`,
       },
     },
   }
