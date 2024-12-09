@@ -21,3 +21,7 @@ database_id = "138ef67c-8cd5-4b40-9dc1-1503b62c1175"
 [[r2_buckets]]
 binding = "FILE_BLOB"
 bucket_name = "file-blob"
+
+# wrangler.toml (wrangler v3.88.0^) worker logs
+[observability.logs]
+enabled = true
