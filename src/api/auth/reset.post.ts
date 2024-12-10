@@ -48,6 +48,7 @@ export default defineEventHandler(async (evt) => {
 
   const token = getRandomString('xxxxyyxxxyxxyx')
   const refreshToken = getRandomString('xyxxyyyyxxyx')
+
   const session: TokenSession = {
     token,
     refreshToken,
@@ -57,9 +58,14 @@ export default defineEventHandler(async (evt) => {
       id: res.data.user.id,
       username: res.data.user.user_metadata.username,
       email: res.data.user.user_metadata.email,
-      avatar: res.data.user.user_metadata.avatar_link,
     },
   }
+  const { data: profile } = await client
+    .from('profiles')
+    .select('*')
+    .eq('email', session.user.email)
+    .single()
+  session.user.avatar = profile?.avatar_link || undefined
 
   await setValue(token, data.email, session)
   setAuthToken(evt, token, data.email)

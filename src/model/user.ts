@@ -64,7 +64,7 @@ export async function setRecord(email: string, value: UserRecord) {
 export async function initRecord(
   email: string,
   username: string,
-  avatar: string
+  avatar: string | undefined
 ) {
   const records = await getRecord(email)
   if (!records) {
