@@ -8,9 +8,10 @@ export default defineEventHandler(async (event) => {
     'Unknown'
   } To (${event.node.req.url})`
   console.log(message)
-  await putValue({
-    message,
-    level: 'info',
-    createdAt: Date.now(),
-  })
+  // disable logging to kv, limit is reached
+  // await putValue({
+  //   message,
+  //   level: 'info',
+  //   createdAt: Date.now(),
+  // })
 })
