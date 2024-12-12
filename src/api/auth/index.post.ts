@@ -1,5 +1,5 @@
 import { useClient } from '~/utils/supabase'
-import { z } from 'zod'
+import { record, z } from 'zod'
 import { getRandomString, setAuthToken } from '~/utils/tools'
 import { TokenSession } from '~/types/user.type'
 import {
@@ -79,8 +79,9 @@ export default defineEventHandler(async (evt) => {
 
   await setValue(token, data.email, session)
   setAuthToken(evt, token, data.email)
-  if (!(await getRecord(data.email))) {
-    initRecord(
+  let userRecord = await getRecord(data.email)
+  if (!userRecord) {
+    userRecord = await initRecord(
       data.email,
       res.data.user.user_metadata.username,
       profile?.avatar_link || undefined
@@ -89,5 +90,6 @@ export default defineEventHandler(async (evt) => {
   return {
     message: 'OK',
     session,
+    record: userRecord,
   }
 })

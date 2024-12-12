@@ -66,14 +66,16 @@ export async function initRecord(
   username: string,
   avatar: string | undefined
 ) {
-  const records = await getRecord(email)
+  let records = await getRecord(email)
   if (!records) {
-    await setRecord(email, {
+    records = {
       avatar,
       email,
       username,
       files: [],
       copyboards: [],
-    })
+    }
+    await setRecord(email, records)
   }
+  return records
 }
