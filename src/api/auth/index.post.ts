@@ -81,7 +81,7 @@ export default defineEventHandler(async (evt) => {
   const { data: profile } = await client
     .from('profiles')
     .select('*')
-    .eq('email', session.user.email)
+    .eq('id', session.user.id)
     .single()
   session.user.avatar = profile?.avatar_link || undefined
 
