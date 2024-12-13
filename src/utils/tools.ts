@@ -32,22 +32,22 @@ export async function getAuthToken(evt: H3Event): Promise<{
   email: string
 } | null> {
   const headerAuth = getHeader(evt, 'Authorization')
+  const cookieToken = getCookie(evt, 'Authorization')
   let auth
   if (headerAuth) {
     auth = {
       token: headerAuth.split(':')[0],
       email: headerAuth.split(':')[1],
     }
-  }
-  const cookieToken = getCookie(evt, 'Authorization')
-  if (cookieToken) {
+  } else if (cookieToken) {
     auth = {
       token: cookieToken.split(':')[0],
       email: cookieToken.split(':')[1],
     }
+  } else {
+    return null
   }
 
-  if (!auth) return null
   const result = await getValue(auth.token, auth.email)
   if (!result) return null
 
@@ -57,5 +57,5 @@ export async function getAuthToken(evt: H3Event): Promise<{
 
 export function setAuthToken(evt: H3Event, token: string, email: string): void {
   setHeader(evt, 'Authorization', `${token}:${email}`)
-  setCookie(evt, 'Authorization', token)
+  setCookie(evt, 'Authorization', `${token}:${email}`)
 }
