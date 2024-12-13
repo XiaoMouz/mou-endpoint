@@ -62,6 +62,7 @@ export default defineEventHandler(async (evt) => {
     return {
       message: 'OK',
       session: origin,
+      record: userRecord,
     }
   }
 
