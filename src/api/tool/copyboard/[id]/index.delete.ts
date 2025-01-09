@@ -1,3 +1,4 @@
+import { deleteCopyboard } from '~/model/copyboard'
 import { deleteFileInfo, getFileInfo } from '~/model/file'
 import { ensureCopyboard, ensureFile } from '~/utils/check'
 import { getAuthToken } from '~/utils/tools'
@@ -9,7 +10,7 @@ export default defineEventHandler(async (evt) => {
     setResponseStatus(evt, 403)
     return { message: 'Failed', error: 'You not owner' }
   }
-  await deleteFileInfo(info.id)
+  await deleteCopyboard(info.id)
   return {
     message: 'OK',
     info,
