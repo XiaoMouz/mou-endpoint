@@ -15,6 +15,8 @@ export async function setCopyboard(key: string, value: Content) {
     }
     if (!record.copyboards.find((i) => i.id === key))
       record.copyboards.push({ id: key, name: value.name })
+    record.copyboards.find((i) => i.id === key)!.name = value.name
+
     await setRecord(value.uploader, record)
   })
   await pushCopyboardQueue(key)
