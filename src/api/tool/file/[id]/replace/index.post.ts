@@ -9,7 +9,7 @@ import {
 import { getRecord } from '~/model/user'
 import { ensureFile } from '~/utils/check'
 import { getAuthToken, getRandomString } from '~/utils/tools'
-import { File } from '~/types/tool-route/file.types'
+import { File as FileInfo } from '~/types/tool-route/file.types'
 export default defineEventHandler({
   onRequest: auth,
   handler: async (evt) => {
@@ -33,6 +33,9 @@ export default defineEventHandler({
       const buffer = Buffer.from(arrayBuffer)
       await setFileRaw(id, buffer)
     })
+    ;(info.mimeType =
+      file instanceof File ? file.type : 'application/octet-stream'),
+      (info.binaryName = file instanceof File ? file.name : info.title)
     info.modifiedAt = Date.now()
     info.expireAt = Date.now() + 7 * 24 * 60 * 60 * 1000
     info.fileSize = blob.size

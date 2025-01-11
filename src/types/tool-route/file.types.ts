@@ -11,6 +11,7 @@ export interface File {
   password?: string
   fileSize: number
   description?: string
+  binaryName?: string
   downloadToken?: string
   downloadTime: number
   comments?: Comment[]
