@@ -15,6 +15,8 @@ export default defineEventHandler((event) => {
   ) {
     setResponseHeader(event, 'Access-Control-Allow-Origin', origin)
   }
+  // set allow headers
+  setResponseHeader(event, 'Access-Control-Allow-Headers', '*')
   if (event.method === 'OPTIONS') {
     return ''
   }
