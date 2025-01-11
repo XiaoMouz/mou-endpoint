@@ -23,5 +23,7 @@ export default defineEventHandler(async (evt) => {
   info.downloadTime += 1
   await setFileInfo(info.id, info)
   const file = await getFileRaw(info.id)
-  return file
+  setHeader(evt, 'Content-Type', info.mimeType || 'application/octet-stream')
+  send(evt, file)
+  return { message: 'OK' }
 })
