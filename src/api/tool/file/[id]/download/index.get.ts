@@ -11,12 +11,12 @@ export default defineEventHandler(async (evt) => {
       return { message: 'Failed', error: 'You not owner' }
     }
   }
-  const token = getHeader(evt, 'Download-Token')
-  if (!token) {
+  const cookie_token = getCookie(evt, 'Download-Token')
+  if (!cookie_token) {
     setResponseStatus(evt, 401)
     return { message: 'Failed', error: 'Need download token' }
   }
-  if (token !== info.downloadToken) {
+  if (cookie_token !== info.downloadToken) {
     setResponseStatus(evt, 403)
     return { message: 'Failed', error: 'Token is wrong' }
   }

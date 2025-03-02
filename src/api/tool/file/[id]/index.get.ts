@@ -32,6 +32,11 @@ export default defineEventHandler(async (evt) => {
       error: 'Password require (Post)',
     }
   }
+  info.downloadToken
+    ? setCookie(evt, 'Download-Token', info.downloadToken, {
+        maxAge: 60 * 60 * 24,
+      })
+    : {}
   return {
     message: 'OK',
     info,
