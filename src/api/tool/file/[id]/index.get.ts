@@ -35,6 +35,7 @@ export default defineEventHandler(async (evt) => {
   info.downloadToken
     ? setCookie(evt, 'Download-Token', info.downloadToken, {
         maxAge: 60 * 60 * 24,
+        domain: 'api.mou.best',
       })
     : {}
   return {

@@ -24,6 +24,14 @@ export default defineEventHandler(async (evt) => {
   await setFileInfo(info.id, info)
   const file = await getFileRaw(info.id)
   setHeader(evt, 'Content-Type', info.mimeType || 'application/octet-stream')
+
+  setHeader(
+    evt,
+    'Content-Disposition',
+    `attachment; filename="${encodeURIComponent(
+      info.binaryName || info.title
+    )}"`
+  )
   send(evt, file)
   return { message: 'OK' }
 })
