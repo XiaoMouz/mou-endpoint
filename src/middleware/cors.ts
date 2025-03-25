@@ -5,6 +5,7 @@ const trustOrigin = [
   'https://mou.best',
   'https://*.mou.best',
 ]
+const acceptExposeHeader = ['Authorization']
 export default defineEventHandler((event) => {
   // if headers origin match regex or domain match trustOrigin set Access-Control-Allow-Origin header
   const origin = getHeader(event, 'Origin')
@@ -17,6 +18,11 @@ export default defineEventHandler((event) => {
   }
   // set allow headers
   setResponseHeader(event, 'Access-Control-Allow-Headers', '*')
+  setHeader(
+    event,
+    'Access-Control-Expose-Headers',
+    acceptExposeHeader.join(',')
+  )
   if (event.method === 'OPTIONS') {
     return ''
   }

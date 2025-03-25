@@ -47,24 +47,24 @@ export default defineEventHandler(async (evt) => {
     }
   }
 
-  let origin = await getSessionByEmail(data.email)
-  if (origin) {
-    let userRecord = await getRecord(data.email)
-    if (!userRecord) {
-      userRecord = await initRecord(
-        data.email,
-        res.data.user.user_metadata.username,
-        origin.user.avatar
-      )
-    }
-    origin.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
-    await setValue(origin.token, data.email, origin)
-    return {
-      message: 'OK',
-      session: origin,
-      record: userRecord,
-    }
-  }
+  // let origin = await getSessionByEmail(data.email)
+  // if (origin) {
+  //   let userRecord = await getRecord(data.email)
+  //   if (!userRecord) {
+  //     userRecord = await initRecord(
+  //       data.email,
+  //       res.data.user.user_metadata.username,
+  //       origin.user.avatar
+  //     )
+  //   }
+  //   origin.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
+  //   await setValue(origin.token, data.email, origin)
+  //   return {
+  //     message: 'OK',
+  //     session: origin,
+  //     record: userRecord,
+  //   }
+  // }
 
   const token = getRandomString('xxxxyyxxxyxxyx')
   const refreshToken = getRandomString('xyxxyyyyxxyx')

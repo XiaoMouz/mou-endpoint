@@ -32,13 +32,14 @@ export async function deleteValue(token: string, email: string) {
 export async function getSessionByEmail(email: string) {
   const storage = useStorage('kv')
   const keys = await storage.getKeys()
+  const result: TokenSession[] = []
   for (let key of keys) {
     if (key.startsWith('auth:') && key.endsWith(email)) {
       const token = await storage.getItem<TokenSession>(key)
-      return token
+      if (token) result.push(token)
     }
   }
-  return null
+  return result
 }
 export async function getSessionByToken(token: string) {
   const storage = useStorage('kv')

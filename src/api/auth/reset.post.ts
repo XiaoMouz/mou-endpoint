@@ -41,9 +41,11 @@ export default defineEventHandler(async (evt) => {
     }
   }
 
-  let origin = await getSessionByEmail(data.email)
-  if (origin) {
-    await deleteValue(origin.token, data.email)
+  let tokens = await getSessionByEmail(data.email)
+  if (tokens.length > 0) {
+    for (let token of tokens) {
+      await deleteValue(token.token, data.email)
+    }
   }
 
   const token = getRandomString('xxxxyyxxxyxxyx')
