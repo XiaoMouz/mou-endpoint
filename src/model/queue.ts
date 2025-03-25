@@ -6,6 +6,9 @@ export async function pushFileQueue(id: string) {
   if (!queue) {
     queue = []
   }
+  if (queue.includes(id)) {
+    return
+  }
   queue.push(id)
   setValue('queue:file', queue)
 }
@@ -34,6 +37,9 @@ export async function pushCopyboardQueue(id: string) {
   let queue = await getValue<string[]>('queue:copyboard')
   if (!queue) {
     queue = []
+  }
+  if (queue.includes(id)) {
+    return
   }
   queue.push(id)
   setValue('queue:copyboard', queue)
