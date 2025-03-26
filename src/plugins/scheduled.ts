@@ -1,6 +1,8 @@
 import { get } from 'http'
+import { deleteCopyboard } from '~/model/copyboard'
 import { deleteFileInfo, getFileInfo } from '~/model/file'
 import { getValue, setValue } from '~/model/kv'
+import { getCopyboardQueue, getFileQueue } from '~/model/queue'
 import { type Database, type Tables } from '~/types/database.types'
 import { type Node } from '~/types/node'
 import { type Result } from '~/types/speedtest'
@@ -55,24 +57,63 @@ const speedtest = async () => {
 }
 
 const checkQueue = async () => {
-  const queue = await getValue<string[]>('queue:file')
+  const queue = await getFileQueue()
   if (!queue || queue.length === 0) {
     return
   }
-  const _checkFile = async (k: string) => {
-    getFileInfo(k).then((file) => {
-      if (!file) {
-        return
-      }
-      const now = Date.now()
-      if (file.expireAt < now) {
-        deleteFileInfo(k)
-      }
-    })
+  const _checkFile = async (k: string): Promise<Boolean> => {
+    const r = getFileInfo(k)
+      .then((file) => {
+        if (!file) {
+          deleteFileInfo(k)
+          return true
+        }
+        const now = Date.now()
+        if (file.expireAt < now) {
+          deleteFileInfo(k)
+          return true
+        }
+        return false
+      })
+      .catch(() => {
+        return true
+      })
+    return r
   }
-  const id = queue.shift()
-  if (id) {
+  for (const k of queue) {
+    const r = await _checkFile(k)
+    if (!r) {
+      break
+    }
   }
 
-  return id
+  const boardqueue = await getCopyboardQueue()
+  if (!boardqueue || boardqueue.length === 0) {
+    return
+  }
+  const _checkcopyboard = async (k: string): Promise<Boolean> => {
+    const r = getFileInfo(k)
+      .then((file) => {
+        if (!file) {
+          deleteCopyboard(k)
+          return true
+        }
+        const now = Date.now()
+        if (file.expireAt < now) {
+          deleteCopyboard(k)
+          return true
+        }
+        return false
+      })
+      .catch(() => {
+        return true
+      })
+    return r
+  }
+  for (const k of boardqueue) {
+    const r = await _checkcopyboard(k)
+    if (!r) {
+      break
+    }
+  }
 }

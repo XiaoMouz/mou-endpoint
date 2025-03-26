@@ -1,7 +1,7 @@
 import type { StorageValue } from 'unstorage'
 import type { Content } from '~/types/tool-route/copyboard.type'
 import { getValue, setValue, haveValue } from './kv'
-import { pushCopyboardQueue } from './queue'
+import { getCopyboardQueue, pushCopyboardQueue } from './queue'
 import { getRecord, setRecord } from './user'
 
 export async function getCopyboard(key: string) {
@@ -24,6 +24,16 @@ export async function setCopyboard(key: string, value: Content) {
 }
 
 export async function deleteCopyboard(key: string) {
+  await setValue('paste:' + key, null)
+  await getCopyboardQueue().then(async (queue) => {
+    if (!queue) {
+      return
+    }
+    await setValue(
+      'queue:copyboard',
+      queue.filter((item) => item !== key)
+    )
+  })
   const info = await getCopyboard(key)
   if (!info) {
     return
@@ -35,8 +45,6 @@ export async function deleteCopyboard(key: string) {
     record.copyboards = record.copyboards.filter((i) => i.id !== key)
     await setRecord(info.uploader, record)
   })
-
-  await setValue('paste:' + key, null)
 }
 
 export async function haveCopyboard(key: string) {

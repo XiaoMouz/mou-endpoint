@@ -1,8 +1,9 @@
 import type { StorageValue } from 'unstorage'
 import { File } from '~/types/tool-route/file.types'
 import { UserRecord } from '~/types/user.type'
-import { pushFileQueue } from './queue'
+import { getFileQueue, pushFileQueue } from './queue'
 import { getRecord, setRecord } from './user'
+import { getValue } from './kv'
 
 const storage = useStorage('blob')
 const kv = useStorage('kv')
@@ -35,6 +36,17 @@ export async function setFileInfo(key: string, value: File) {
 }
 
 export async function deleteFileInfo(key: string) {
+  await storage.removeItem(key)
+  await kv.removeItem(`file:${key}`)
+  await getFileQueue().then(async (queue) => {
+    if (!queue) {
+      return
+    }
+    await kv.setItem(
+      'queue:file',
+      queue.filter((item) => item !== key)
+    )
+  })
   const info = await getFileInfo(key)
   if (!info) {
     return
@@ -46,6 +58,4 @@ export async function deleteFileInfo(key: string) {
     record.files = record.files.filter((file) => file.id !== key)
     await setRecord(info.uploader, record)
   })
-  await storage.removeItem(key)
-  await kv.removeItem(`file:${key}`)
 }
