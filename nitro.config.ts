@@ -1,3 +1,5 @@
+import { dev } from 'process'
+
 export default defineNitroConfig({
   preset: 'cloudflare-module',
   minify: false,
@@ -7,7 +9,8 @@ export default defineNitroConfig({
     '/**': {
       cors: true,
       headers: {
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, PATCH',
+        'Access-Control-Allow-Methods':
+          'GET, POST, PUT, DELETE, OPTIONS, PATCH',
         'Access-Control-Allow-Headers': 'Authorization, Content-Type',
       },
     },

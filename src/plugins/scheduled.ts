@@ -11,7 +11,7 @@ import { useClient } from '~/utils/supabase'
 
 export default defineNitroPlugin((nitro) => {
   nitro.hooks.hook('cloudflare:scheduled', async (evt) => {
-    speedtest()
+    await speedtest()
   })
 })
 
