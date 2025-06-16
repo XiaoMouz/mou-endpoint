@@ -1,5 +1,4 @@
 export default defineEventHandler((event) => {
-  // 返回可用的路由
   //get visit host
   const host = getHeader(event, 'host')
   // get protocol
@@ -11,7 +10,7 @@ export default defineEventHandler((event) => {
     },
     scheduled: `${protocol}://${host}/__scheduled`,
     post: {
-      'posts(only title)': `${protocol}://${host}/me/post/`,
+      'posts(only title)': `${protocol}://${host}/me/post?offset=0&size=5`,
       'post(index or slug)': `${protocol}://${host}/me/post/:id`,
       'use password access protected post(post method)': `${protocol}://${host}/me/post/:id`,
     },
