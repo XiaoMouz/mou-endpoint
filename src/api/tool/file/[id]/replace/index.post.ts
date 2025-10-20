@@ -1,15 +1,7 @@
-import { z } from 'zod'
 import { auth } from '~/middleware/auth'
-import {
-  deleteFileInfo,
-  getFileInfo,
-  setFileInfo,
-  setFileRaw,
-} from '~/model/file'
-import { getRecord } from '~/model/user'
+import { setFileInfo, setFileRaw } from '~/model/file'
 import { ensureFile } from '~/utils/check'
 import { getAuthToken, getRandomString } from '~/utils/tools'
-import { File as FileInfo } from '~/types/tool-route/file.types'
 export default defineEventHandler({
   onRequest: auth,
   handler: async (evt) => {

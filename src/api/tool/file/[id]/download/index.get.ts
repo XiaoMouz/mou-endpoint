@@ -1,4 +1,4 @@
-import { getFileInfo, getFileRaw, setFileInfo } from '~/model/file'
+import { getFileRaw, setFileInfo } from '~/model/file'
 import { ensureFile } from '~/utils/check'
 import { getAuthToken } from '~/utils/tools'
 
