@@ -1,5 +1,3 @@
-import { dev } from 'process'
-
 export default defineNitroConfig({
   preset: 'cloudflare-module',
   minify: false,

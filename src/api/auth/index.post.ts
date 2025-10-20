@@ -1,13 +1,8 @@
 import { useClient } from '~/utils/supabase'
-import { record, z } from 'zod'
+import { z } from 'zod'
 import { getRandomString, setAuthToken } from '~/utils/tools'
 import { TokenSession } from '~/types/user.type'
-import {
-  getRecord,
-  getSessionByEmail,
-  initRecord,
-  setValue,
-} from '~/model/user'
+import { getRecord, initRecord, setValue } from '~/model/user'
 
 export default defineEventHandler(async (evt) => {
   let body
@@ -46,25 +41,6 @@ export default defineEventHandler(async (evt) => {
       error: res.error.message,
     }
   }
-
-  // let origin = await getSessionByEmail(data.email)
-  // if (origin) {
-  //   let userRecord = await getRecord(data.email)
-  //   if (!userRecord) {
-  //     userRecord = await initRecord(
-  //       data.email,
-  //       res.data.user.user_metadata.username,
-  //       origin.user.avatar
-  //     )
-  //   }
-  //   origin.expireAt = 30 * 24 * 60 * 60 * 1000 + Date.now()
-  //   await setValue(origin.token, data.email, origin)
-  //   return {
-  //     message: 'OK',
-  //     session: origin,
-  //     record: userRecord,
-  //   }
-  // }
 
   const token = getRandomString('xxxxyyxxxyxxyx')
   const refreshToken = getRandomString('xyxxyyyyxxyx')
