@@ -1,8 +1,8 @@
-import type { StandardLog } from '~/types/log.type'
 import {
   getValue as getTValue,
   setValue as setTValue,
 } from './kv'
+import type { StandardLog } from '~/types/log.type'
 
 export async function getValue(time = new Date().setHours(0, 0, 0, 0)) {
   // get today timestamp in day
