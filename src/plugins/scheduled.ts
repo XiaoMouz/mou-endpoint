@@ -1,5 +1,4 @@
-import { get } from 'http'
-import { deleteCopyboard } from '~/model/copyboard'
+import { deleteCopyboard, getCopyboard } from '~/model/copyboard'
 import { deleteFileInfo, getFileInfo } from '~/model/file'
 import { getValue, setValue } from '~/model/kv'
 import { getCopyboardQueue, getFileQueue } from '~/model/queue'
@@ -92,7 +91,7 @@ const checkQueue = async () => {
     return
   }
   const _checkcopyboard = async (k: string): Promise<Boolean> => {
-    const r = getFileInfo(k)
+    const r = getCopyboard(k)
       .then((file) => {
         if (!file) {
           deleteCopyboard(k)

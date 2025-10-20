@@ -1,5 +1,4 @@
-import type { StorageValue } from 'unstorage'
-import { getValue, setValue, haveValue } from './kv'
+import { getValue, setValue } from './kv'
 
 export async function pushFileQueue(id: string) {
   let queue = await getValue<string[]>('queue:file')
