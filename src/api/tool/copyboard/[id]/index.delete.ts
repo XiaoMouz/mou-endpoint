@@ -1,6 +1,5 @@
 import { deleteCopyboard } from '~/model/copyboard'
-import { deleteFileInfo, getFileInfo } from '~/model/file'
-import { ensureCopyboard, ensureFile } from '~/utils/check'
+import { ensureCopyboard } from '~/utils/check'
 import { getAuthToken } from '~/utils/tools'
 
 export default defineEventHandler(async (evt) => {

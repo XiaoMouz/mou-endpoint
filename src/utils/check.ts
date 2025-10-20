@@ -1,7 +1,7 @@
 import { H3Event } from 'h3'
 import { deleteFileInfo, getFileInfo, setFileInfo } from '~/model/file'
+import { deleteCopyboard, getCopyboard } from '~/model/copyboard'
 import { getAuthToken, getRandomString } from './tools'
-import { getCopyboard } from '~/model/copyboard'
 
 export async function ensureFile(evt: H3Event) {
   const id = getRouterParam(evt, 'id')
@@ -42,7 +42,7 @@ export async function ensureCopyboard(evt: H3Event) {
     throw createError({ message: 'Not Found' })
   }
   if (info.expireAt < Date.now()) {
-    await deleteFileInfo(id)
+    await deleteCopyboard(id)
     setResponseStatus(evt, 404)
     throw createError({ message: 'Not Found' })
   }

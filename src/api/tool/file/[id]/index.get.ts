@@ -1,7 +1,6 @@
-import { deleteFileInfo, getFileInfo, setFileInfo } from '~/model/file'
 import { getRecord } from '~/model/user'
 import { ensureFile } from '~/utils/check'
-import { getAuthToken, getRandomString } from '~/utils/tools'
+import { getAuthToken } from '~/utils/tools'
 
 export default defineEventHandler(async (evt) => {
   const info = await ensureFile(evt)

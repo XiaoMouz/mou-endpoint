@@ -1,5 +1,3 @@
-import { H3EventFetch } from 'nitropack'
-
 export default defineEventHandler((evt) => {
   return {
     name: 'XiaoMouz',

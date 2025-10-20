@@ -1,5 +1,5 @@
 import { getRecord } from '~/model/user'
-import { ensureCopyboard, ensureFile } from '~/utils/check'
+import { ensureCopyboard } from '~/utils/check'
 
 export default defineEventHandler(async (evt) => {
   const info = await ensureCopyboard(evt)

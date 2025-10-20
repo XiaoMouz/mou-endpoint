@@ -1,5 +1,4 @@
 import { auth } from '~/middleware/auth'
-import { getCopyboard } from '~/model/copyboard'
 import { getRecord } from '~/model/user'
 import { getAuthToken } from '~/utils/tools'
 

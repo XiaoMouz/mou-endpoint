@@ -1,6 +1,5 @@
 import { auth } from '~/middleware/auth'
-import { deleteFileInfo, getFileInfo } from '~/model/file'
-import { getRecord } from '~/model/user'
+import { deleteFileInfo } from '~/model/file'
 import { ensureFile } from '~/utils/check'
 import { getAuthToken } from '~/utils/tools'
 

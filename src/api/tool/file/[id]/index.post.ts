@@ -1,4 +1,3 @@
-import { deleteFileInfo, getFileInfo } from '~/model/file'
 import { getRecord } from '~/model/user'
 import { ensureFile } from '~/utils/check'
 import { getAuthToken } from '~/utils/tools'

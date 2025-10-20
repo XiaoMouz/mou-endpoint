@@ -1,4 +1,3 @@
-import { set } from 'zod'
 import { getRecord } from '~/model/user'
 import { ensureCopyboard } from '~/utils/check'
 
